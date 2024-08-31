@@ -1,0 +1,29 @@
+.p5-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.p5-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.p5-wrapper>div {
+    border-width: 5px;
+    border-color: black;
+    border-style: dashed;
+}
+
+/* Additional styles for TopBar */
+.topbar-Div {
+    width: 100%;
+    max-width: 750px;
+}
