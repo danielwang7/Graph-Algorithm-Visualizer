@@ -1,7 +1,7 @@
 
 export default class Node {
 
-    constructor(p, id, x, y, radius = 50) {
+    constructor(p, id, x, y, color = [255, 255, 255], radius = 50) {
         this.p = p;  // Reference to the p5 instance
         this.id = id // ID of the node
 
@@ -11,20 +11,26 @@ export default class Node {
         this.x = x;
         this.y = y;
 
-        // radius of the node
+        // radius & color of the node
         this.radius = radius;
+        this.color = color;
 
         // dist of mouse from center
         this.offsetX = 0;
         this.offsetY = 0;
         this.isDragging = false;
+    }
 
-
+    printInfo() {
+        console.log("INFO FOR:", this.id);
+        console.log(this.x);
+        console.log(this.y);
+        console.log(this.connections);
     }
 
     draw() {
         const p = this.p;
-        p.fill(255);
+        p.fill(this.color[0], this.color[1], this.color[2]);
         p.stroke(0);
         p.strokeWeight(8);
         p.ellipse(this.x, this.y, this.radius * 2);
@@ -53,6 +59,10 @@ export default class Node {
             this.x = p.mouseX + this.offsetX;
             this.y = p.mouseY + this.offsetY;
         }
+    }
+
+    changeColor(color = [255, 255, 255]) {
+        this.color = color;
     }
 
     // _______NODE CONNECTION LOGIC_______

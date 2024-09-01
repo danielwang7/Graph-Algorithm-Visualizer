@@ -5,7 +5,7 @@ import React, { useRef, useEffect } from 'react';
 import p5 from 'p5';
 
 
-const Canvas = ({ p5Instance, nodes, HEIGHT, WIDTH }) => {
+const Canvas = ({ p5Instance, nodes, HEIGHT, WIDTH, onNodeClick, selectMode }) => {
     const canvasRef = useRef();
 
     useEffect(() => {
@@ -26,6 +26,7 @@ const Canvas = ({ p5Instance, nodes, HEIGHT, WIDTH }) => {
                 p.strokeWeight(8);
                 nodes.forEach(node => {
                     node.getConnections().forEach(connectionId => {
+
                         const targetNode = nodes.find(n => n.id === connectionId);
                         if (targetNode) {
                             p.line(node.x, node.y, targetNode.x, targetNode.y);
@@ -42,16 +43,23 @@ const Canvas = ({ p5Instance, nodes, HEIGHT, WIDTH }) => {
 
             };
 
+            // Node clicking logic
             p.mousePressed = () => {
                 nodes.forEach(node => {
                     if (node.isMouseInside()) {
-                        node.startDragging(); // Start dragging the node if mouse is inside
+                        node.startDragging();
                     }
                 });
             };
 
             p.mouseReleased = () => {
-                nodes.forEach(node => node.stopDragging()); // Stop dragging all nodes
+                nodes.forEach(node => node.stopDragging());
+
+                nodes.forEach(node => {
+                    if (node.isMouseInside() && selectMode) {
+                        onNodeClick(node);
+                    }
+                });
             };
 
         };
